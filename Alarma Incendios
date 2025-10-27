@@ -1,0 +1,54 @@
+// Alarma de incendios con sensor de gas y buzzer
+
+int gas = 0;           // Variable para almacenar la lectura del sensor de gas
+int rojo = 5;          // Pin del LED rojo
+int amarillo = 4;      // Pin del LED amarillo
+int buzzer = 3;        // Pin del buzzer
+
+void setup() {
+  pinMode(rojo, OUTPUT);
+  pinMode(amarillo, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+  Serial.begin(9600);  // Inicia el monitor serie
+}
+
+void loop() {
+  // Leer el valor analógico del sensor (rango 0–1023)
+  gas = analogRead(A5);
+  Serial.println(gas);
+
+  // Si el nivel de gas es alto (mayor a 800) activar la alarma
+  if (gas > 800) {
+
+    // Efecto de sirena: subir tono
+    for (int i = 500; i <= 1500; i += 10) {
+      tone(buzzer, i);
+      delay(10);
+    }
+
+    // Efecto de sirena: bajar tono
+    for (int i = 1500; i >= 500; i -= 10) {
+      tone(buzzer, i);
+      delay(10);
+    }
+
+    noTone(buzzer);  // Detiene el sonido
+    delay(500);
+
+    // Encender LED rojo
+    digitalWrite(rojo, HIGH);
+    digitalWrite(amarillo, LOW);
+    delay(500);
+
+    // Encender LED amarillo
+    digitalWrite(rojo, LOW);
+    digitalWrite(amarillo, HIGH);
+    delay(500);
+  }
+  else {
+    // Si no hay gas peligroso, apagar la alarma
+    noTone(buzzer);
+    digitalWrite(rojo, LOW);
+    digitalWrite(amarillo, LOW);
+  }
+}
