@@ -1,0 +1,40 @@
+// Declaración de variables para cada LED
+int Verde = 13;
+int Amarillo = 12;
+int Rojo = 11;
+
+void setup() {
+  // Configurar los pines como salida
+  pinMode(Rojo, OUTPUT);
+  pinMode(Amarillo, OUTPUT);
+  pinMode(Verde, OUTPUT);
+}
+
+void loop() {
+  // Encender luz verde
+  digitalWrite(Rojo, LOW);
+  digitalWrite(Amarillo, LOW);
+  digitalWrite(Verde, HIGH);
+  delay(3000); // Mantener 3 segundos
+  
+  // Parpadeo del LED verde (3 veces)
+  for (int i = 0; i < 3; i++) {
+    digitalWrite(Verde, LOW);   // Apagar LED verde
+    delay(300);                 // Esperar 0.3 segundos
+    digitalWrite(Verde, HIGH);  // Encender LED verde
+    delay(300);                 // Esperar 0.3 segundos
+  }
+  
+  // Encender luz amarilla
+  digitalWrite(Rojo, LOW);
+  digitalWrite(Amarillo, HIGH);
+  digitalWrite(Verde, LOW);
+  delay(2000); // Mantener 2 segundo
+
+  // Encender luz rojo
+  digitalWrite(Rojo, HIGH);
+  digitalWrite(Amarillo, LOW);
+  digitalWrite(Verde, LOW);
+  delay(3000); // Mantener 3 segundos
+  
+}
