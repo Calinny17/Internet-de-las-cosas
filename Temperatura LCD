@@ -1,0 +1,31 @@
+#include <LiquidCrystal.h>
+
+int sensor = 0;
+
+// Configuración de los pines del LCD: RS, E, D4, D5, D6, D7
+LiquidCrystal lcd_1(12, 11, 5, 4, 3, 2);
+
+void setup()
+{
+  lcd_1.begin(16, 2); // Inicializa pantalla de 16x2 caracteres
+  lcd_1.print("Temp C:     F:"); // Título en primera línea
+}
+
+void loop()
+{
+  sensor = analogRead(A0);  // Lee el valor analógico del sensor
+  float TempC = (((float)sensor / 1024) * 5 - 0.5) * 100; // Conversión a °C
+  float TempF = (TempC * 1.8) + 32; // Conversión a °F
+
+  // Muestra valores en la segunda línea
+  lcd_1.setCursor(0, 1);  // Posición inicial de línea 2
+  lcd_1.print(TempC);     // Muestra temperatura en °C
+  lcd_1.print(" C ");     
+  lcd_1.print(TempF);     // Muestra temperatura en °F
+  lcd_1.print(" F ");
+
+  delay(1000); // Espera 1 segundo antes de actualizar
+  lcd_1.clear(); // Limpia pantalla
+  lcd_1.setCursor(0, 0);
+  lcd_1.print("Temp C:     F:"); // Reimprime encabezado
+}
